@@ -24,7 +24,22 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+from sklearn import svm
 
+clf = svm.SVC(C=10000., kernel='rbf')
+
+t0 = time()
+clf.fit(features_train, labels_train)
+print 'linear train time:'+str(time()-t0)+'s'
+
+t0 = time()
+pred = clf.predict(features_test)
+print '10:'+str(pred[10])
+print '26:'+str(pred[26])
+print '50:'+str(pred[50])
+print '1 size:'+str(sum(pred))
+#print clf.score(features_test, labels_test)
+print 'linear test time:'+str(time()-t0)+'s'
 #########################################################
 
 
