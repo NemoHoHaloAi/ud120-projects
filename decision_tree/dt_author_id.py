@@ -27,7 +27,7 @@ print 'features size:'+str(len(features_train[0]))
 
 from sklearn.tree import DecisionTreeClassifier
 
-clf = DecisionTreeClassifier(min_samples_split=40)
+clf = DecisionTreeClassifier(min_samples_split=40, max_depth=5)
 
 clf.fit(features_train, labels_train)
 
