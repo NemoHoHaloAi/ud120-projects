@@ -29,7 +29,7 @@ target, features = targetFeatureSplit( data )
 from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
-test_color = "b"
+test_color = "r"
 
 
 
@@ -37,8 +37,35 @@ test_color = "b"
 ### Please name it reg, so that the plotting code below picks it up and 
 ### plots it correctly. Don't forget to change the test_color above from "b" to
 ### "r" to differentiate training points from test points.
+from sklearn.linear_model import LinearRegression
 
+reg = LinearRegression()
+reg.fit(feature_train, target_train)
 
+print 'coef:'+str(reg.coef_)
+print 'intercept:'+str(reg.intercept_)
+print 'train score:'+str(reg.score(feature_train, target_train))
+print 'test score:'+str(reg.score(feature_test, target_test))
+
+### hypothesis choice feature is long_term_incentive
+features_list = ["bonus", "long_term_incentive"]
+data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
+target, features = targetFeatureSplit( data )
+feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
+
+reg = LinearRegression()
+reg.fit(feature_train, target_train)
+
+print 'long_term_incentive coef:'+str(reg.coef_)
+print 'long_term_incentive intercept:'+str(reg.intercept_)
+print 'long_term_incentive train score:'+str(reg.score(feature_train, target_train))
+print 'long_term_incentive test score:'+str(reg.score(feature_test, target_test))
+
+### data back to bonus and salary
+features_list = ["bonus", "salary"]
+data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
+target, features = targetFeatureSplit( data )
+feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 
 
 
@@ -64,6 +91,12 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+
+### add test code
+reg.fit(feature_test, target_test)
+print 'new regression line coef:'+str(reg.coef_)
+plt.plot(feature_train, reg.predict(feature_train), color="y")
+
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
