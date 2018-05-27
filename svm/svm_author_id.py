@@ -40,6 +40,16 @@ print '50:'+str(pred[50])
 print '1 size:'+str(sum(pred))
 #print clf.score(features_test, labels_test)
 print 'linear test time:'+str(time()-t0)+'s'
+print 'linear test score:'+str(clf.score(features_test, labels_test))
 #########################################################
 
+### test GridSearchCV
 
+from sklearn.model_selection import GridSearchCV
+svm = svm.SVC()
+parameters = {'kernel':('linear', 'rbf'), 'C':[1, 10]}
+clf = GridSearchCV(svm, parameters)
+t0 = time()
+clf.fit(features_train, labels_train)
+print 'Opt train time:'+str(time()-t0)+'s'
+print 'Opt linear test score:'+str(clf.score(features_test, labels_test))
