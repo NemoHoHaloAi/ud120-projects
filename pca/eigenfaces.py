@@ -29,6 +29,7 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.decomposition import RandomizedPCA
+from sklearn.decomposition import FastICA
 from sklearn.svm import SVC
 
 # Display progress logs on stdout
@@ -71,11 +72,14 @@ n_components = 150
 
 print "Extracting the top %d eigenfaces from %d faces" % (n_components, X_train.shape[0])
 t0 = time()
-pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
+# pca
+# pca = RandomizedPCA(n_components=n_components, whiten=True).fit(X_train)
+# ica
+pca = FastICA(n_components=n_components, whiten=True).fit(X_train)
 print "done in %0.3fs" % (time() - t0)
 
-print 'First:'+str(pca.explained_variance_ratio_[0])
-print 'Second:'+str(pca.explained_variance_ratio_[1])
+#print 'First:'+str(pca.explained_variance_ratio_[0])
+#print 'Second:'+str(pca.explained_variance_ratio_[1])
 
 eigenfaces = pca.components_.reshape((n_components, h, w))
 
